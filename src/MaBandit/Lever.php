@@ -66,9 +66,12 @@ class Lever
 
   public function incrementNumerator()
   {
-    if ($this->_numerator >= $this->_denominator)
-      throw new \MaBandit\Exception\LeverNumeratorTooHighException();
-    $this->_numerator++;
+    if ($this->_numerator >= $this->_denominator){
+	    $this->_denominator = $this->_numerator + 2;
+    }
+
+	  $this->_numerator++;
+
   }
 
   public function inflate(\MaBandit\Persistence\PersistedLever $settings)
@@ -80,4 +83,6 @@ class Lever
     $this->_attrs = $settings->getAttrs();
     return $this;
   }
+
+
 }

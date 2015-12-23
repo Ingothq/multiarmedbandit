@@ -53,7 +53,7 @@ class AbstractPersistor implements Persistor {
 	 *
 	 * @access private
 	 *
-	 * @var ID
+	 * @var string|array
 	 */
 	private $ID;
 
@@ -89,6 +89,7 @@ class AbstractPersistor implements Persistor {
 		return $lever;
 	}
 
+
 	/**
 	 * Load a variant as a lever
 	 *
@@ -106,6 +107,24 @@ class AbstractPersistor implements Persistor {
 		}
 
 		return $this->_levers[$_lever][$lever->getValue()];
+	}
+
+	/**
+	 * Batch save new levers
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $levers
+	 * @param int $experiment_id
+	 */
+	public function batchSave( array $levers, $experiment_id ){
+		if( ! isset( $levers[ $experiment_id ] ) ){
+			$levers = [
+				$experiment_id => $levers
+			];
+		}
+		$this->_levers = $levers;
+		$this->save_levers();
 	}
 
 	/**

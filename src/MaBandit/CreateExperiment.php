@@ -30,6 +30,10 @@ class CreateExperiment {
 	 */
 	public function __construct( array $variants, $id, \MaBandit\MaBandit $bandit ) {
 		$this->experiment = $bandit->createExperiment( (string) $id, $variants );
+		if( method_exists( $bandit->getPersistor(), 'save_levers' ) ){
+			$bandit->getPersistor()->batchSave( $this->experiment->getLevers(), $id );
+		}
+
 	}
 
 	/**

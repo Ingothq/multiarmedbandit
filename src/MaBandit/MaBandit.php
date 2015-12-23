@@ -66,11 +66,15 @@ class MaBandit
     return $lever;
   }
 
-  public function chooseLever(\MaBandit\Experiment $experiment)
+  public function chooseLever(\MaBandit\Experiment $experiment, $increment = true )
   {
     $lever = $this->getStrategy()->chooseLever($experiment);
-    $lever->incrementDenominator();
-    return $this->validateLever($this->getPersistor()->saveLever($lever));
+	  if ( $increment ) {
+		  $lever->incrementDenominator();
+		  return $this->validateLever($this->getPersistor()->saveLever($lever));
+	  } else {
+		  return $lever;
+	  }
   }
 
   public function registerConversion(\MaBandit\Lever $lever)

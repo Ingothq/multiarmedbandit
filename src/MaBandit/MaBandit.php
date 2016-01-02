@@ -68,7 +68,13 @@ class MaBandit
 
   public function chooseLever(\MaBandit\Experiment $experiment, $increment = true )
   {
-    $lever = $this->getStrategy()->chooseLever($experiment);
+	  $levers = $experiment->getLevers();
+	  if( 1 == count( $levers ) ){
+		  $lever = $levers[0];
+	  }else{
+		  $lever = $this->getStrategy()->chooseLever($experiment);
+	  }
+
 	  if ( $increment ) {
 		  $lever->incrementDenominator();
 		  return $this->validateLever($this->getPersistor()->saveLever($lever));

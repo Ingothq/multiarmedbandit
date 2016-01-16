@@ -22,7 +22,14 @@ class EpsilonGreedy extends Strategy
 
   public function shouldExplore($levers)
   {
-    return (($this->getTotalIterations($levers) + 1) % $this->_exploreEvery) 
-      == 0;
+	  if ( 1 == $this->_exploreEvery ) {
+			$should = true;
+	  }else{
+		  $should = ( ( $this->getTotalIterations( $levers ) + 1 ) % $this->_exploreEvery )
+		            == 0;
+	  }
+
+	  return $should;
+
   }
 }
